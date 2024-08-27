@@ -5,6 +5,8 @@ require("dotenv").config();
 require("./config/database"); // Conectando ao banco de dados
 
 const app = express();
+const cors = require("cors");
+app.use(cors());
 
 // Middlewares
 app.use(bodyParser.json());

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -30,7 +30,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background-color: #28a745;
+  background-color: #ffc107;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -38,17 +38,26 @@ const Button = styled.button`
   cursor: pointer;
   margin: 10px 0;
   &:hover {
-    background-color: #218838;
+    background-color: #e0a800;
   }
 `;
 
-const AdicionarLivro = ({ onVoltar }) => {
+const EditarLivro = ({ id, onVoltar }) => {
   const [livro, setLivro] = useState({
     titulo: "",
     autor: "",
     ano: "",
     genero: "",
   });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/livros/${id}`)
+      .then((response) => setLivro(response.data))
+      .catch((error) =>
+        console.error("Erro ao carregar os dados do livro:", error)
+      );
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,17 +67,17 @@ const AdicionarLivro = ({ onVoltar }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/livros", livro)
+      .patch(`http://localhost:5000/livros/${id}`, livro)
       .then(() => {
-        alert("Livro adicionado com sucesso!");
+        alert("Livro atualizado com sucesso!");
         onVoltar();
       })
-      .catch((error) => console.error("Erro ao adicionar o livro:", error));
+      .catch((error) => console.error("Erro ao atualizar o livro:", error));
   };
 
   return (
     <Container>
-      <Title>Adicionar Livro</Title>
+      <Title>Editar Livro</Title>
       <Form onSubmit={handleSubmit}>
         <Label>
           Título:
@@ -109,7 +118,7 @@ const AdicionarLivro = ({ onVoltar }) => {
             onChange={handleChange}
           />
         </Label>
-        <Button type="submit">Adicionar Livro</Button>
+        <Button type="submit">Atualizar Livro</Button>
         <Button type="button" onClick={onVoltar}>
           Voltar
         </Button>
@@ -118,4 +127,4 @@ const AdicionarLivro = ({ onVoltar }) => {
   );
 };
 
-export default AdicionarLivro;
+export default EditarLivro;
