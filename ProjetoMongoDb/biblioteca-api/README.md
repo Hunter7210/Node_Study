@@ -13,18 +13,18 @@
 
 #### - Realizando a criação de um valor na coleção:
 
-![Metodo POST](/test_imgs/method_post.png)
+![Metodo POST](test_imgs/method_post.png)
 
 ### Method Patch:
 
 #### - Alterando um valor especifico na coleção:
 
-![Metodo PATCH](/test_imgs/method_patch.png)
+![Metodo PATCH](test_imgs/method_patch.png)
 
 ### Method Delete:
 
 #### - Deletando o valor na coleção:
 
-![Metodo DELETE](/test_imgs/method_delete.png)
+![Metodo DELETE](test_imgs/method_delete.png)
 
 </details>
