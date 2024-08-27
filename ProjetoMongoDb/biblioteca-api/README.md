@@ -7,7 +7,7 @@
 
 #### - Listando todos os valores presentes na coleção:
 
-![Metodo GET](/test_imgs/method_get.png)
+![Metodo GET](test_imgs/method_get.png)
 
 ### Method Post:
 
