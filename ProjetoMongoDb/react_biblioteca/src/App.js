@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ListaLivros from "./components/lista_de_livros";
 import EditarLivro from "./components/editar_livros";
-import AdicionarLivro from "./components/adicionar_livro";
+import CriarLivro from "./components/adicionar_livro";
 import DetalhesLivro from "./components/detalhes_livro";
 
 // Estilização dos componentes
@@ -24,6 +24,21 @@ const Header = styled.header`
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 20px;
+`;
+const NavButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 const MainContent = styled.main`
@@ -60,22 +75,27 @@ const App = () => {
   return (
     <Container>
       <Header>Biblioteca Virtual</Header>
+
       <MainContent>
+            <div>
+              <NavButton onClick={mudarParaAdicionarLivro}>
+                Adicionar Livro
+              </NavButton>
+              <NavButton onClick={mudarParaLivros}>Voltar à Lista</NavButton>
+            </div>
         {view === "livros" && (
           <ListaLivros
-            onEditarLivro={mudarParaEditarLivro}
-            onAdicionarLivro={mudarParaAdicionarLivro}
-            onVerDetalhes={mudarParaDetalhes}
+            onEdit={mudarParaEditarLivro}
+            onDelete={mudarParaLivros}
+            onDetails={mudarParaDetalhes}
           />
         )}
-        {view === "adicionarLivro" && (
-          <AdicionarLivro onVoltar={mudarParaLivros} />
-        )}
+        {view === "adicionarLivro" && <CriarLivro onVoltar={mudarParaLivros} />}
         {view === "editarLivro" && (
           <EditarLivro id={livroId} onVoltar={mudarParaLivros} />
         )}
         {view === "detalhesLivro" && (
-          <DetalhesLivro id={livroId} onVoltar={mudarParaLivros} />
+          <DetalhesLivro id={livroId} onBack={mudarParaLivros} />
         )}
       </MainContent>
     </Container>

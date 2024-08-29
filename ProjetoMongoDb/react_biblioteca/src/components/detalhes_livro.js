@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // Estilização dos componentes
@@ -49,10 +48,8 @@ const Button = styled.button`
 `;
 
 // Componente DetalhesLivro
-function DetalhesLivro() {
-  const { id } = useParams();
+function DetalhesLivro({ id, onBack }) {
   const [livro, setLivro] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -78,7 +75,7 @@ function DetalhesLivro() {
       <Paragraph>
         <strong>Gênero:</strong> {livro.genero}
       </Paragraph>
-      <Button onClick={() => navigate("/")}>Voltar à Lista</Button>
+      <Button onClick={onBack}>Voltar à Lista</Button>
     </Container>
   );
 }

@@ -2,47 +2,40 @@ import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
+// Estilização dos componentes
 const Container = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Label = styled.label`
-  margin-bottom: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input`
+  width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ced4da;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
 `;
 
 const Button = styled.button`
-  background-color: #28a745;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px 0;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+
   &:hover {
-    background-color: #218838;
+    background-color: #0056b3;
   }
 `;
 
-const AdicionarLivro = ({ onVoltar }) => {
+function CriarLivro() {
   const [livro, setLivro] = useState({
     titulo: "",
     autor: "",
@@ -52,70 +45,55 @@ const AdicionarLivro = ({ onVoltar }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLivro({ ...livro, [name]: value });
+    setLivro((prevLivro) => ({ ...prevLivro, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/livros", livro)
-      .then(() => {
-        alert("Livro adicionado com sucesso!");
-        onVoltar();
-      })
-      .catch((error) => console.error("Erro ao adicionar o livro:", error));
+    try {
+      await axios.post("http://localhost:5000/livros", livro);
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Erro ao criar livro:", err);
+    }
   };
 
   return (
     <Container>
-      <Title>Adicionar Livro</Title>
-      <Form onSubmit={handleSubmit}>
-        <Label>
-          Título:
-          <Input
-            type="text"
-            name="titulo"
-            value={livro.titulo}
-            onChange={handleChange}
-            required
-          />
-        </Label>
-        <Label>
-          Autor:
-          <Input
-            type="text"
-            name="autor"
-            value={livro.autor}
-            onChange={handleChange}
-            required
-          />
-        </Label>
-        <Label>
-          Ano:
-          <Input
-            type="number"
-            name="ano"
-            value={livro.ano}
-            onChange={handleChange}
-            required
-          />
-        </Label>
-        <Label>
-          Gênero:
-          <Input
-            type="text"
-            name="genero"
-            value={livro.genero}
-            onChange={handleChange}
-          />
-        </Label>
-        <Button type="submit">Adicionar Livro</Button>
-        <Button type="button" onClick={onVoltar}>
-          Voltar
-        </Button>
-      </Form>
+      <h1>Criar Novo Livro</h1>
+      <form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          name="titulo"
+          value={livro.titulo}
+          onChange={handleChange}
+          placeholder="Título"
+        />
+        <Input
+          type="text"
+          name="autor"
+          value={livro.autor}
+          onChange={handleChange}
+          placeholder="Autor"
+        />
+        <Input
+          type="text"
+          name="ano"
+          value={livro.ano}
+          onChange={handleChange}
+          placeholder="Ano"
+        />
+        <Input
+          type="text"
+          name="genero"
+          value={livro.genero}
+          onChange={handleChange}
+          placeholder="Gênero"
+        />
+        <Button type="submit">Criar Livro</Button>
+      </form>
     </Container>
   );
-};
+}
 
-export default AdicionarLivro;
+export default CriarLivro;
