@@ -12,7 +12,7 @@ router.get("/", livroController.listarLivros);
 router.get("/:id", livroController.buscarLivroPorId);
 
 // Atualizar um livro por ID
-router.patch("/:id", livroController.atualizarLivro);
+router.put("/:id", livroController.atualizarLivro);
 
 // Deletar um livro por ID
 router.delete("/:id", livroController.deletarLivro);

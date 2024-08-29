@@ -1,5 +1,7 @@
 const Livro = require("../models/livro"); // Importa o modelo 'Livro' do arquivo de modelos
 
+//Criação de metodos:
+
 // Criar um novo livro
 exports.criarLivro = async (req, res) => {
   // Cria uma nova instância do modelo 'Livro' com os dados recebidos na requisição
@@ -8,7 +10,8 @@ exports.criarLivro = async (req, res) => {
     autor: req.body.autor, // Autor do livro
     ano: req.body.ano, // Ano de publicação do livro
     genero: req.body.genero, // Gênero do livro (opcional)
-  });
+    imagem: req.file ? `localhost:5000/livros.img${req.file.filename}` : null, // Salva o caminho da imagem
+  }); 
 
   try {
     // Salva o novo livro no banco de dados
@@ -20,6 +23,7 @@ exports.criarLivro = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 
 // Listar todos os livros
 exports.listarLivros = async (req, res) => {
@@ -73,6 +77,9 @@ exports.atualizarLivro = async (req, res) => {
     }
     if (req.body.genero != null) {
       livro.genero = req.body.genero;
+    }
+    if (req.body.imagem != null) {
+      livro.imagem = req.body.imagem;
     }
 
     // Salva o livro atualizado no banco de dados
