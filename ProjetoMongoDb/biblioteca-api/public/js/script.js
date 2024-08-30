@@ -1,5 +1,5 @@
 // URL da API (substitua pela URL correta se necessário)
-const apiUrl = "http://localhost:3000/livros";
+const apiUrl = "http://localhost:5000/livros";
 
 // Função para buscar os livros na API e renderizar na tabela
 function buscarLivros() {
@@ -50,7 +50,7 @@ function buscarLivros() {
         linha.appendChild(autorCelula);
         linha.appendChild(anoCelula);
         linha.appendChild(generoCelula);
-        linha.appendChild(acoesCelula); //ações adicionadas na linha
+        linha.appendChild(acoesCelula);
 
         // Adiciona a linha na tabela
         tabelaCorpo.appendChild(linha);
@@ -59,59 +59,30 @@ function buscarLivros() {
     .catch((error) => console.error("Erro ao buscar livros:", error)); // Loga um erro em caso de falha
 }
 
-// Chama a função para buscar e renderizar os livros ao carregar a página
-window.onload = buscarLivros;
+// Função para adicionar um novo livro
+function adicionarLivro(livro) {
+  fetch(apiUrl, {
+    method: "POST", // Método POST é usado para criação
+    headers: { "Content-Type": "application/json" }, // Define que os dados estão sendo enviados no formato JSON
+    body: JSON.stringify(livro), // Converte o objeto 'livro' em uma string JSON para enviar no corpo da requisição
+  })
+    .then(() => (window.location.href = "index.html")) // Redireciona para a página 'index.html' após a adição bem-sucedida
+    .catch((error) => console.error("Erro ao adicionar livro:", error)); // Lida com erros durante o processo de adição
+}
 
-// Método ADD ----------------------------------------------
-// ----------------------------------------------------------
+// Função  atualizar um livro
+function atualizarLivro(id, livro) {
+  fetch(`${apiUrl}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(livro),
+  })
+    .then(() => (window.location.href = "index.html"))
+    .catch((error) => console.error("Erro ao atualizar livro:", error));
+}
 
-// Adiciona um listener ao formulário com o ID 'livroForm', que escuta o evento 'submit' (quando o formulário é enviado)
-document
-  .getElementById("livroForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Previne o comportamento padrão do formulário, que é recarregar a página
-
-    // Obtém o parâmetro 'id' da URL (usado para determinar se é uma atualização ou adição de livro)
-    const id = new URLSearchParams(window.location.search).get("id");
-
-    // Captura os valores dos campos do formulário
-    const titulo = document.getElementById("titulo").value;
-    const autor = document.getElementById("autor").value;
-    const ano = document.getElementById("ano").value;
-    const genero = document.getElementById("genero").value;
-
-    // Cria um objeto livro com os dados capturados do formulário
-    const livro = { titulo, autor, ano, genero };
-
-    if (id) {
-      // Se há um 'id' na URL, isso indica que um livro existente está sendo atualizado
-
-      fetch(`${apiUrl}/${id}`, {
-        // Faz uma requisição PUT à API para atualizar o livro com o ID especificado
-        method: "PUT", // Método PUT é usado para atualização
-        headers: { "Content-Type": "application/json" }, // Define que os dados estão sendo enviados no formato JSON
-        body: JSON.stringify(livro), // Converte o objeto 'livro' em uma string JSON para enviar no corpo da requisição
-      })
-        .then(() => (window.location.href = "index.html")) // Redireciona para a página 'index.html' após a atualização bem-sucedida
-        .catch((error) => console.error("Erro ao atualizar livro:", error)); // Lida com erros durante o processo de atualização
-    } else {
-      // Caso não haja um 'id' na URL, isso indica que um novo livro está sendo adicionado
-
-      fetch(apiUrl, {
-        // Faz uma requisição POST à API para adicionar um novo livro
-        method: "POST", // Método POST é usado para criação
-        headers: { "Content-Type": "application/json" }, // Define que os dados estão sendo enviados no formato JSON
-        body: JSON.stringify(livro), // Converte o objeto 'livro' em uma string JSON para enviar no corpo da requisição
-      })
-        .then(() => (window.location.href = "index.html")) // Redireciona para a página 'index.html' após a adição bem-sucedida
-        .catch((error) => console.error("Erro ao adicionar livro:", error)); // Lida com erros durante o processo de adição
-    }
-  });
-
-// levar informações do livro para o update.html
-// -------------------------------------------------------------
-// Preenche o formulário de atualização com os dados do livro existente
-if (window.location.pathname.includes("update.html")) {
+// função que preenche o formulário de atualização com os dados do livro existente
+function preencherLivros() {
   const id = new URLSearchParams(window.location.search).get("id");
   fetch(`${apiUrl}/${id}`)
     .then((response) => response.json())
@@ -125,7 +96,53 @@ if (window.location.pathname.includes("update.html")) {
     .catch((error) => console.error("Erro ao buscar livro:", error));
 }
 
-//Função para deletar
+//Renderização ao Carregar as Páginas
+
+window.onload = function () {
+  if (window.location.pathname.includes("index.html")) {
+    buscarLivros();
+  }
+  if (window.location.pathname.includes("update.html")) {
+    preencherLivros();
+  }
+};
+
+//Disparador do Evento do Formulário
+
+//Listener do Cadastrp
+document
+  .getElementById("livroCad")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Captura os valores dos campos do formulário
+    const titulo = document.getElementById("titulo").value;
+    const autor = document.getElementById("autor").value;
+    const ano = document.getElementById("ano").value;
+    const genero = document.getElementById("genero").value;
+
+    // Cria um objeto livro com os dados capturados do formulário
+    const livro = { titulo, autor, ano, genero };
+    adicionarLivro(livro);
+  });
+
+//listener do Update
+document.getElementById("livroUP").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const titulo = document.getElementById("titulo").value;
+  const autor = document.getElementById("autor").value;
+  const ano = document.getElementById("ano").value;
+  const genero = document.getElementById("genero").value;
+
+  const livro = { titulo, autor, ano, genero };
+
+  // Atualizar livro existente
+
+  atualizarLivro(id, livro);
+});
+
 // Função para deletar um livro
 function deletarLivro(id) {
   fetch(`${apiUrl}/${id}`, {

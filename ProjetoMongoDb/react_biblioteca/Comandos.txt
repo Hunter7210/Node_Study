@@ -1,0 +1,9 @@
+Comando para instalar o react na pagina:
+Raiz:
+npm install -g create-react-app
+
+View:
+npx create-react-app gerenciamento-livros
+
+
+

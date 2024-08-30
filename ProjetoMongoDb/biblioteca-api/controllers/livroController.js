@@ -1,21 +1,26 @@
 const Livro = require("../models/livro"); // Importa o modelo 'Livro' do arquivo de modelos
 
 //Criação de metodos:
-
 // Criar um novo livro
 exports.criarLivro = async (req, res) => {
-  // Cria uma nova instância do modelo 'Livro' com os dados recebidos na requisição
-  const livro = new Livro({
-    titulo: req.body.titulo, // Título do livro
-    autor: req.body.autor, // Autor do livro
-    ano: req.body.ano, // Ano de publicação do livro
-    genero: req.body.genero, // Gênero do livro (opcional)
-    imagem: req.file ? `localhost:5000/livros.img${req.file.filename}` : null, // Salva o caminho da imagem
-  }); 
-
   try {
+    // Verifica se o arquivo de imagem foi enviado
+    if (!req.file) {
+      return res.status(400).json({ message: "Imagem não fornecida" });
+    }
+
+    // Cria uma nova instância do modelo 'Livro' com os dados recebidos na requisição
+    const livro = new Livro({
+      titulo: req.body.titulo, // Título do livro
+      autor: req.body.autor, // Autor do livro
+      ano: req.body.ano, // Ano de publicação do livro
+      genero: req.body.genero, // Gênero do livro (opcional)
+      imagem: `/img/${req.file.filename}`, // Salva o caminho da imagem
+    });
+
     // Salva o novo livro no banco de dados
     const novoLivro = await livro.save();
+
     // Retorna o livro criado com status 201 (Criado)
     res.status(201).json(novoLivro);
   } catch (err) {
@@ -23,6 +28,7 @@ exports.criarLivro = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 
 
 // Listar todos os livros

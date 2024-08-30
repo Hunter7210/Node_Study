@@ -19,7 +19,7 @@ const Title = styled.h1`
 `;
 
 const CoverImage = styled.img`
-  max-width: 100%;
+  max-width: 20%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -60,11 +60,15 @@ function DetalhesLivro({ id, onBack }) {
 
   if (!livro) return <Container>Carregando...</Container>;
 
+  /*   // Construir a URL completa para a imagem
+  const imagemUrl = livro.imagem
+    ? `http://localhost:5000${livro.imagem}`
+    : null; */
+
   return (
     <Container>
-      {livro.capa && (
-        <CoverImage src={livro.capa} alt={`Capa do livro ${livro.titulo}`} />
-      )}
+      <CoverImage src={livro.imagem} alt={`Capa do livro ${livro.titulo}`} />
+
       <Title>{livro.titulo}</Title>
       <Paragraph>
         <strong>Autor:</strong> {livro.autor}

@@ -35,6 +35,18 @@ const Button = styled.button`
   }
 `;
 
+const FileInput = styled(Input)`
+  padding: 0;
+`;
+
+const Message = styled.div`
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  color: ${(props) => (props.error ? "red" : "green")};
+  background-color: ${(props) => (props.error ? "#fdd" : "#dfd")};
+`;
+
 function CriarLivro() {
   const [livro, setLivro] = useState({
     titulo: "",
@@ -43,18 +55,46 @@ function CriarLivro() {
     genero: "",
   });
 
+  const [imagem, setImagem] = useState(null);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLivro((prevLivro) => ({ ...prevLivro, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    setImagem(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("titulo", livro.titulo);
+    formData.append("autor", livro.autor);
+    formData.append("ano", livro.ano);
+    formData.append("genero", livro.genero);
+    if (imagem) {
+      formData.append("imagem", imagem);
+    }
+
     try {
-      await axios.post("http://localhost:5000/livros", livro);
-      window.location.href = "/";
+      await axios.post("http://localhost:5000/livros", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setMessage("Livro criado com sucesso!");
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000); // Redireciona após 2 segundos para permitir que o usuário veja a mensagem de sucesso
     } catch (err) {
       console.error("Erro ao criar livro:", err);
+      setMessage("Erro ao criar livro. Tente novamente.");
+      
     }
   };
 
@@ -90,8 +130,10 @@ function CriarLivro() {
           onChange={handleChange}
           placeholder="Gênero"
         />
+        <FileInput type="file" name="imagem" onChange={handleFileChange} />
         <Button type="submit">Criar Livro</Button>
       </form>
+      {message && <Message error={error}>{message}</Message>}
     </Container>
   );
 }
