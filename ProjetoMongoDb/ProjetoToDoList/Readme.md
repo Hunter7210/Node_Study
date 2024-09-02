@@ -98,6 +98,7 @@ gantt
     Preparação para Lançamento    :d3, 2024-09-27, 2d
     Lançamento e Feedback         :d4, 2024-09-29, 2d
 
+```
 
 </details>
 <details>
