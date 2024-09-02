@@ -105,14 +105,14 @@ gantt
   <summary><strong>Diagramas para Desenvolvimento</strong></summary>
 
 ### Diagrama de Classe:
-![Diagrama de Classe](/doc_img/diagram_classe.png)
+![Diagrama de Classe](doc_img/diagram_classe.png)
 
 ### Diagrama de Uso:
-![Diagrama de Uso](/doc_img/diagram_uso.png.png)
+![Diagrama de Uso](doc_img/diagram_uso.png.png)
 
 ### Diagrama de Fluxo:
-![Diagrama de Fluxo](ProjetoToDoList/doc_img/diagram_fluxo_1.png)
-![Diagrama de Fluxo](ProjetoToDoList/doc_img/diagram_fluxo_2.png)
+![Diagrama de Fluxo](doc_img/diagram_fluxo_1.png)
+![Diagrama de Fluxo](doc_img/diagram_fluxo_2.png)
 
 </details>
 
