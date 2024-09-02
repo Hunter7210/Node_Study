@@ -120,7 +120,7 @@ A aplicação web de To-Do List será desenvolvida utilizando React para o front
   - Lançar a aplicação para os usuários.
   - Coletar feedback inicial e resolver quaisquer problemas críticos.
 
-</  details>
+</details>
 <details>
   <summary><strong>Diagramas para Desenvolvimento</strong></summary>
 
@@ -138,3 +138,32 @@ A aplicação web de To-Do List será desenvolvida utilizando React para o front
 
 ## Conclusão
 Este plano fornece uma base sólida para o desenvolvimento da aplicação web de To-Do List, garantindo que todos os aspectos críticos sejam abordados. Seguir este plano ajudará a assegurar que o projeto seja entregue com sucesso, atendendo às necessidades dos usuários da Escola SENAI e aplicando as melhores práticas de desenvolvimento moderno. Se precisar de mais detalhes ou ajustes específicos, estou aqui para ajudar!
+
+
+```mermaid
+gantt
+    title Cronograma do Projeto
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d-%m-%Y
+
+    section Semana 1: Planejamento e Preparação
+    Reunião de Kickoff            :a1, 2024-09-01, 2d
+    Análise de Requisitos         :a2, 2024-09-03, 2d
+    Planejamento do Projeto       :a3, 2024-09-05, 1d
+    Preparação do Ambiente        :a4, 2024-09-06, 2d
+
+    section Semana 2: Design e Protótipos
+    Design de Interface           :b1, 2024-09-08, 3d
+    Definição da Arquitetura       :b2, 2024-09-11, 2d
+    Revisão e Ajustes             :b3, 2024-09-13, 2d
+
+    section Semana 3: Desenvolvimento
+    Desenvolvimento de Funcionalidades Básicas :c1, 2024-09-15, 3d
+    Desenvolvimento de Funcionalidades Avançadas :c2, 2024-09-18, 2d
+    Integração e Testes Iniciais  :c3, 2024-09-20, 2d
+
+    section Semana 4: Testes, Ajustes e Lançamento
+    Testes e Depuração            :d1, 2024-09-22, 3d
+    Revisão Final e Documentação  :d2, 2024-09-25, 2d
+    Preparação para Lançamento    :d3, 2024-09-27, 2d
+    Lançamento e Feedback         :d4, 2024-09-29, 2d
