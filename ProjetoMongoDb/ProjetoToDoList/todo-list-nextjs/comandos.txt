@@ -1,0 +1,41 @@
+Comandos para o Projeto React:
+
+Criação de um projeto React:
+    npm create create-next-app@latest
+
+//Usando o next.js possibilita não usar o express, substutuindo-o;
+
+cd nomeprojeto:
+    Install biblioteca:
+        npm install mongose  (É o driver de conexão do MongoDB)
+
+    Criando a pasta utils:
+        mkdir utils
+            Criando o arquivo:
+                mongodb.js
+
+Na raiz crie .env.local, para armazenar os dados do banco de dados
+    
+    Criando a pasta models:
+        mkdir models
+            Criando o arquivo:
+                Todo.js 
+
+No app:
+    
+    Criando a pasta models:
+        mkdir api (Responsavel por conter todas as minhas rotas)
+            Criando o arquivo:
+                Route.js  (Navegação)
+
+    Cria a pasta [id]:
+        mkdir [id]
+            Criando o arquivo:
+                Route.js (Este route é Responsavel por conter os metodos que precisam do [id])
+
+
+    Vá até o page.js:
+        altere-o;
+
+Rodar a aplicação:
+npm run dev
