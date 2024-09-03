@@ -11,4 +11,5 @@ const TodoSchema =  new mongoose.Schema({
    },   
 });
 
-export default mongoose.models.Todo || mongoose.model('Todo', TodoSchema);
+//Busca no model o arquivo Todo ou ele busca para TodoSchema
+export default mongoose.models.Todo || mongoose.model('Todo', TodoSchema); 
