@@ -1,7 +1,10 @@
+//Criação de rotas que não haja necessidade do ID
+
 //Ja identifica que este é meu arquivo
 import { getTodos, createTodo } from "@/controllers/TodoController";
 import { NextResponse } from "next/server";
 
+//GET 
 export async function GET() {
   try {
     const todos = await getTodos(); //Chama o metodo do controller
@@ -11,6 +14,7 @@ export async function GET() {
   }
 }
 
+//POST
 export async function POST(req) {
   try {
     const data = await req.json();
