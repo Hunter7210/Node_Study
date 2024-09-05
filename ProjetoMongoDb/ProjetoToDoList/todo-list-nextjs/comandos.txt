@@ -1,7 +1,7 @@
 Comandos para o Projeto React:
 
 Criação de um projeto React:
-    npm create create-next-app@latest
+    npm create-next-app@latest
 
 //Usando o next.js possibilita não usar o express, substutuindo-o;
 

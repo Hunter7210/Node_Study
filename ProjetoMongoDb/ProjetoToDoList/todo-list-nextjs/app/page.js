@@ -41,16 +41,16 @@ export default function Home() {
   };
 
   //Atualizar o item
-  const updateTodo = async (id) => {
+  const updateTodo = async (id, status) => {
     const response = await fetch(`/api/todos/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ complete: true }),
-    }); 
-    const data = await response.json(); 
-    setTodos([todos.filter((todo) => todo._id !== id)]);
+      }, 
+      body: JSON.stringify({ completed: !status }),
+    });
+
+    fetchTodos();
   };
 
   return (
@@ -65,13 +65,15 @@ export default function Home() {
       <ul>
         {todos.map((todo) => (
           <li key={todo._id}>
-            {todo.title}
+            {todo.title} - {todo.completed ? "Concluído" : "Pendente"}
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => updateTodo(todo._id, todo.completed)}
+            />
+            
             <button onClick={() => deleteTodo(todo._id)}>Excluir</button>
-            <button onClick={() => updateTodo(todo._id)}>
-              Marcar como concluida
-            </button>
-
-            <p>{todo.completed}</p>
+            
           </li>
         ))}
       </ul>
