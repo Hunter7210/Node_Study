@@ -10,7 +10,7 @@ export async function POST(request) {
   const { email, password } = await request.json();
   await connectMongo();
   try {
-    const user = await User.findOne(email); //ENCONTRA O OBJETO EM QUE O EMAIL IGUAL NA COLEÇÃO
+    const user = await User.findOne({ email }); //ENCONTRA O OBJETO EM QUE O EMAIL IGUAL NA COLEÇÃO
     //Verificar se o email exite
     //Validando
     if (user && user.comparePassword(password)) {
@@ -23,6 +23,6 @@ export async function POST(request) {
       return NextResponse.json({ sucess: false }, { status: 400 }); //Erro de acesso
     }
   } catch (error) {
-      return NextResponse.json({ sucess: false }, { status: 404 }); //Erro de conexão
+    return NextResponse.json({ sucess: false }, { status: 404 }); //Erro de conexão
   }
 }

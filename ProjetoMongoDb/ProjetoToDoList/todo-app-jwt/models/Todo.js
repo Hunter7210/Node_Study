@@ -2,8 +2,7 @@
 
 import mongoose from "mongoose";
 
-
-//Criando a estrutura da minha coleção com Schema 
+//Criando a estrutura da minha coleção com Schema
 const TodoSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,11 +13,11 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     //Por padrão o required é true.
   },
-  status:{
+  status: {
     type: String,
-    enum:["Pendente", "Em Progresso", "Concluído"],
-    default:"Pendente"
-}
+    enum: ["Pendente", "Em Progresso", "Concluído"],
+    default: "Pendente",
+  },
 });
 
 const Todo = mongoose.models.Todo || mongoose.model("Todo", TodoSchema);
