@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation";
 
 export default function TodoPage() {
   const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+  const [newTitulo, setNewTitulo] = useState("");
+  const [newDescricao, setNewDescricao] = useState("");
+  const [newStatus, setNewStatus] = useState("Pendente");
   const router = useRouter();
 
+  // Fetch todos ao carregar a página
   useEffect(() => {
     const fetchTodos = async () => {
       const token = localStorage.getItem("token");
@@ -33,6 +36,7 @@ export default function TodoPage() {
     fetchTodos();
   }, [router]);
 
+  // Adiciona nova tarefa
   const addTodo = async () => {
     const token = localStorage.getItem("token");
     const response = await fetch("/api/todos", {
@@ -41,14 +45,21 @@ export default function TodoPage() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ title: newTodo }),
+      body: JSON.stringify({
+        titulo: newTitulo,
+        descricao: newDescricao,
+        status: newStatus,
+      }),
     });
 
     const data = await response.json();
     setTodos([...todos, data.todo]);
-    setNewTodo("");
+    setNewTitulo("");
+    setNewDescricao("");
+    setNewStatus("Pendente"); // Reseta o status para Pendente
   };
 
+  // Deleta uma tarefa
   const deleteTodo = async (id) => {
     const token = localStorage.getItem("token");
     await fetch(`/api/todos?id=${id}`, {
@@ -64,17 +75,31 @@ export default function TodoPage() {
   return (
     <div>
       <h1>To-Do List</h1>
+      {/* Formulário para adicionar nova tarefa */}
       <input
         type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="Nova tarefa"
+        value={newTitulo}
+        onChange={(e) => setNewTitulo(e.target.value)}
+        placeholder="Título da tarefa"
       />
+      <input
+        type="text"
+        value={newDescricao}
+        onChange={(e) => setNewDescricao(e.target.value)}
+        placeholder="Descrição da tarefa"
+      />
+      <select value={newStatus} onChange={(e) => setNewStatus(e.target.value)}>
+        <option value="Pendente">Pendente</option>
+        <option value="Em progresso">Em progresso</option>
+        <option value="Concluído">Concluído</option>
+      </select>
       <button onClick={addTodo}>Adicionar Tarefa</button>
+
+      {/* Lista de tarefas */}
       <ul>
         {todos.map((todo) => (
           <li key={todo._id}>
-            {todo.title}
+            <strong>{todo.titulo}</strong> - {todo.descricao} [{todo.status}]
             <button onClick={() => deleteTodo(todo._id)}>Excluir</button>
           </li>
         ))}

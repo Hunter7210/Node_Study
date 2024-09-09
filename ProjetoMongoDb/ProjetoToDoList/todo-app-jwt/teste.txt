@@ -1,0 +1,26 @@
+Tema:
+	Plataforma de receitas -MyRecipeBook-
+Contexto:
+    A empresa MyRecipeBook disponibilizara  uma plataforma onde os usuários podem cadastrar suas próprias receitas, navegar por receitas criadas por outros usuários, e avaliar as receitas com notas e comentários, a plataforma funcionará como um livro de receitas comunitário, permitindo que os usuários compartilhem suas criações culinárias e explorem novas ideias para refeições.
+
+Funcionalidades:
+	- CRUD
+	- Serviço de autenticação do usuario para incluir a receita(MIDDLEWARE)
+	
+
+    Paginas:
+		- Cadastro do Usuario
+		- Login
+			**Usuario Comum**Receitas (CRUD)**
+			        -Ver Receitas (Diversas)
+                        - Visualizar a receita 
+                            - Pg Avaliação (Notas e Comentários)
+                    -Adicionar Receita(Para adicionar receita deve ser um usuario verificado)
+			        -Editar Receita (Sua propria)
+			        -Apagar Receita (Sua propria)
+
+
+ANTIGO:
+**Usuario verificado**
+            **ADM**
+		        -Avaliação de Receitas(ADM)
