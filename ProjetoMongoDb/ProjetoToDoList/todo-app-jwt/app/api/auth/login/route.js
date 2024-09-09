@@ -2,7 +2,6 @@ import User from "@/models/User";
 import connectMongo from "@/utils/dbConnect";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { model } from "mongoose";
 
 //METODO DO TIPO POST PARA LOGIN
 export async function POST(request) {
